@@ -110,17 +110,6 @@ export default {
                 prevButton: '.swiper-button-prev',
             },
         }
-    },
-    mounted() {
-        $(".b1 .show-btn span").click(function () {
-            $(".b1-box").toggleClass("show");
-            if ($(".b1 .show-btn span").text() == '查看更多') {
-                $(".b1 .show-btn span").text('收起');
-            } else {
-                $(".b1 .show-btn span").text('查看更多');
-            }
-            // console.log( $(".b1 .show-btn span").text())
-        })
     }
 }
 </script>
