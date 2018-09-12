@@ -175,19 +175,15 @@
             width: 100%;
             height: 360px;
             display: block;
-            background: transparent; /* 一些不支持背景渐变的浏览器 */  
-            background: -moz-linear-gradient(top, transparent 0%, #fff 100%);
-            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,transparent), color-stop(100%,#fff));
-            background: -webkit-linear-gradient(top, transparent 0%,#fff 100%);
-            background: -o-linear-gradient(top, transparent 0%,#fff 100%);
-            background: -ms-linear-gradient(top, transparent 0%,#fff 100%);
-            background: linear-gradient(to bottom, transparent 0%,#fff 100%);
+            background: url(/images/about/b1_img.png) no-repeat top;
+            background-size: contain;
             p {
                 position: absolute;
                 bottom: 60px;
                 left: 0;
                 text-align: center;
                 width: 100%;
+                background-color: #fff;
                 span {
                     font-size: 26px;
                     color: #e91222;
@@ -204,7 +200,7 @@
             }
         }
         .show-btn.up {
-            background: transparent;
+            background: none;
             p {
                 bottom: 20px;
                 i {

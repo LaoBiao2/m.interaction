@@ -16,16 +16,16 @@
                         <nuxt-link to="/">首页</nuxt-link>
                     </li>
                     <li>
-                        <nuxt-link to="/">产品服务</nuxt-link>
+                        <nuxt-link to="/service">产品服务</nuxt-link>
                     </li>
                     <li>
-                        <nuxt-link to="/">能力优势</nuxt-link>
+                        <nuxt-link to="/advantage">能力优势</nuxt-link>
                     </li>
                     <li>
-                        <nuxt-link to="/">新闻中心</nuxt-link>
+                        <nuxt-link to="/news">新闻中心</nuxt-link>
                     </li>
                     <li>
-                        <nuxt-link to="/">关于我们</nuxt-link>
+                        <nuxt-link to="/about">关于我们</nuxt-link>
                     </li>
                 </ul>
             </div>

@@ -4,7 +4,7 @@
         <div class="container News">
             <ul class="content news-ul" @scroll="gd_add">
                 <li v-for="(newsLi, key) in newsList" :key="key" :class="'li-' + (key+1)">
-                    <nuxt-link to="" class="clearfix">
+                    <nuxt-link to="/news/1" class="clearfix">
                         <div class="img-box fl">
                             <img :src="newsLi.newsImg" alt="">
                         </div>
