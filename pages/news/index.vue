@@ -2,7 +2,7 @@
     <section>
         <news-header></news-header>
         <div class="container News">
-            <ul class="content">
+            <ul class="content news-ul" @scroll="gd_add">
                 <li v-for="(newsLi, key) in newsList" :key="key" :class="'li-' + (key+1)">
                     <nuxt-link to="" class="clearfix">
                         <div class="img-box fl">
@@ -16,6 +16,7 @@
                 </li>
             </ul>
             <span class="tip-span"><i></i>努力加载中...</span>
+            <span id="top-span"></span>
         </div>
     </section>
 </template>
@@ -62,6 +63,41 @@ export default {
     },
     components: {
         NewsHeader
+    },
+    mounted() {
+        $("#top-span").click(function () {
+            $('html, body').animate({scrollTop: '0px'}, 500);
+        });
+        window.addEventListener('scroll',this.handleScroll)
+        // $.post('',{page:this.page},function(json){
+        //     for(let i=0;i<json.length;i++){
+        //         this.huifang_li.push(json[i])
+        //     }
+        // })
+    },
+    methods: {
+        gd_add(){
+            let wrap_height=$('.news-ul').height();  //容器的高度
+            let scroll_top=$('.news-ul').scrollTop();   //滚动条的scrolltop
+            let scroll_height=$('.news-ul').prop('scrollHeight');  //内容的高度
+            let is_height=scroll_height-wrap_height-scroll_top;   //判断是否到了底部
+            // if (is_height==0&&this.isadd) {
+            //   this.page++;
+            //   this.isadd=false;
+            //   $.post('',{page:this.page},function(json){
+            //     for(let i=0;i<json.length;i++){
+            //       this.huifang_li.push(json[i])
+            //     }
+            //   })
+            //   console.log(this.page);
+            // }
+            console.log(scroll_top);
+        },
+        handleScroll(){
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+                // 加载数据
+            }
+        }
     }
 }
 </script>
@@ -132,6 +168,16 @@ export default {
             background: url(/images/news/news_icon.png) -229px 0 no-repeat;
             background-size: 264px 90px;
         }
+    }
+    #top-span {
+        width: 92px;
+        height: 90px;
+        display: inline-block;
+        background: url(/images/news/news_icon.png) -83px 0 no-repeat;
+        background-size: 264px 90px;
+        position: fixed;
+        bottom: 304px;
+        right: 20px;
     }
 }
 
