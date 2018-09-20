@@ -5,13 +5,13 @@
                 <div class="content">
                     <div class="title-box">
                         <div class="title-content">
-                            <b>10年客服老司机教你这样处理棘手的客户投诉</b>
-                            <span><i></i>2018/06/20</span>
+                            <b>{{detailList.new_title}}</b>
+                            <span><i></i>{{detailList.new_time}}</span>
                         </div>
                     </div>
                     <div class="news-box clearfix">
-                        <div class="news-content">
-                            <p>客户投诉处理是让每个客服头疼的问题，有着10年客户投诉处理实战经验的客服老司机，从一线客服和客服管理者两个维度，深度总结了3个关键点，7个行动点，帮助你轻松应对客户投诉。今天与大家分享。</p>
+                        <div class="news-content" v-html="detailContent">
+                            <!-- <p>客户投诉处理是让每个客服头疼的问题，有着10年客户投诉处理实战经验的客服老司机，从一线客服和客服管理者两个维度，深度总结了3个关键点，7个行动点，帮助你轻松应对客户投诉。今天与大家分享。</p>
                             <p>一线客服层面</p>
                             <p>❖展现主动倾听的姿态</p>
                             <p>当用户购买的产品出现问题，或用户遇到问题急需帮助时，往往会在来电时情绪激动。我们的客服或是因为身经百战、思维定式已经了解用户问题所在，或是着急为用户处理，或是不想令用户情绪再激动下去，对客户的不满和抱怨采取遏制的手段，还没有等客户说完话就开始进行“解释”，这样很容易令用户误解客服们是在急切地推卸责任。</p>
@@ -36,25 +36,25 @@
                             <p>3、无法进行全员分享，避免类似问题的再次产生。</p>
                             <p>事实上投诉并不是没有办法控制，只要用正确的心态去面对，使用合理的方式方法，就可以尽可能的避免不必要的投诉产生。</p>
                             <p>❖情绪控制</p>
-                            <p>尤其是客服管理者，在产生投诉的情况下，务必不能急躁，心态要平和。投诉既然已经产生，首要关注的问题应该是分析投诉原因，考虑如何进行有效的规避。而不是首先关注如何惩罚员工及投诉是不是/p。</p>
+                            <p>尤其是客服管理者，在产生投诉的情况下，务必不能急躁，心态要平和。投诉既然已经产生，首要关注的问题应该是分析投诉原因，考虑如何进行有效的规避。而不是首先关注如何惩罚员工及投诉是不是/p。</p> -->
                         </div>
-                        <div class="show-btn"><p><span>展开剩余80%</span><i></i></p></div>
+                        <div class="show-btn"><p @click="more(detailList.id)"><span>展开剩余80%</span><i></i></p></div>
                     </div>
                     <div class="news-nav">
-                        <span class="nav-span"><span>上一篇:</span><nuxt-link :to="'/news/' + newsNavPrev.id ">{{newsNavPrev.title}}</nuxt-link></span>
-                        <span class="nav-span"><span>下一篇:</span><nuxt-link :to="'/news/' + newsNavPrev.id ">{{newsNavNext.title}}</nuxt-link></span>
+                        <span class="nav-span"><span>上一篇:</span><nuxt-link :to="'/news/' + newsNavPrev.id ">{{newsNavPrev.new_title}}</nuxt-link></span>
+                        <span class="nav-span"><span>下一篇:</span><nuxt-link :to="'/news/' + newsNavNext.id ">{{newsNavNext.new_title}}</nuxt-link></span>
                     </div>
                     <div class="hot-news">
                         <h6><b>热门推荐</b></h6>
                         <ul>
-                            <li v-for="(newsLi, key) in newsList" :key="key" :class="'li-' + (key+1)">
-                                <nuxt-link to="" class="clearfix">
+                            <li v-for="(hotLi, key) in hotList" :key="key" :class="'li-' + (key+1)" v-if="key < 3">
+                                <nuxt-link :to="'/news/' + hotLi.id" class="clearfix">
                                     <div class="img-box fl">
-                                        <img :src="newsLi.newsImg" alt="">
+                                        <img :src="dataList.config.con_prefix + hotLi.new_img" alt="">
                                     </div>
                                     <div class="txt fr">
-                                        <b>{{newsLi.newsTitle}}</b>
-                                        <span><i></i>{{newsLi.newsDate}}</span>
+                                        <b>{{hotLi.new_title}}</b>
+                                        <span><i></i>{{hotLi.new_time}}</span>
                                     </div>
                                 </nuxt-link>
                             </li>
@@ -69,54 +69,94 @@
 
 <script>
 	export default {
+        async asyncData({ app, params }) {
+            let  data  = await app.$axios.$get('/api/news/' + params.id);
+            return { 
+                dataList: data,
+                detailList: data.detail,
+                hotList: data.hot,
+                newsNavPrev: data.prev,
+                newsNavNext: data.next,
+                detailContent: data.detail.new_descriptions
+            }
+        },
         data() {
             return {
                 newsList: [
-                    {
-                        newsImg: '/images/news/news_img1.jpg',
-                        newsId: '1',
-                        newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                        newsDate: '2018/06/20'
-                    },{
-                        newsImg: '/images/news/news_img2.jpg',
-                        newsId: '2',
-                        newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                        newsDate: '2018/06/20'
-                    },{
-                        newsImg: '/images/news/news_img3.jpg',
-                        newsId: '3',
-                        newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                        newsDate: '2018/06/20'
-                    }
+                    // {
+                    //     newsImg: '/images/news/news_img1.jpg',
+                    //     newsId: '1',
+                    //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                    //     newsDate: '2018/06/20'
+                    // },{
+                    //     newsImg: '/images/news/news_img2.jpg',
+                    //     newsId: '2',
+                    //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                    //     newsDate: '2018/06/20'
+                    // },{
+                    //     newsImg: '/images/news/news_img3.jpg',
+                    //     newsId: '3',
+                    //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                    //     newsDate: '2018/06/20'
+                    // }
                 ],
                 newsNavPrev: {
-                    id: '1',
-                    title: '服务外包业促粤港澳大湾区城市建设'
+                    // id: '1',
+                    // title: '服务外包业促粤港澳大湾区城市建设'
                 },
                 newsNavNext: {
-                    id: '2',
-                    title: '呼叫中心如何正确衡量通话质量'
+                    // id: '2',
+                    // title: '呼叫中心如何正确衡量通话质量'
                 },
+                newsId: '',
+                dataList: [],
+                detailList: '',
+                detailContent: ''
             }
         },
 		mounted() {
-            $(".news-box .news-content p:gt(10)").css("display", "none");
-            $(".news-box .show-btn p").click(function () {
-                $(this).parent().toggleClass("up");
-                if ($(".news-box .show-btn p span").text() == '收起' ) {
-                    $(".news-box .show-btn p span").text('展开剩余80%');
-                    $(".news-box .news-content p:gt(10)").css("display", "none");
-                } else {
-                    $(".news-box .show-btn p span").text('收起');
-                    $(".news-box .news-content p").css("display", "block");
-                }
-            })
+            $(".news-box .news-content").find("span").attr("style", "");
+            this.detailContent = this.detailList.new_descriptions;
+            // $(".news-box .news-content p span:gt(4)").css("display", "none");
+            // $(".news-box .show-btn p").click(function () {
+            //     $(this).parent().toggleClass("up");
+            //     if ($(".news-box .show-btn p span").text() == '收起' ) {
+            //         $(".news-box .show-btn p span").text('展开剩余80%');
+            //         this.detailContent = this.detailList.new_content;
+            //         // $(".news-box .news-content p span:gt(4)").css("display", "none");
+            //     } else {
+            //         $(".news-box .show-btn p span").text('收起');
+            //         console.log(this.detailList)
+            //         // this.detailContent = this.detailList.new_descriptions;
+            //         // $(".news-box .news-content p span").css("display", "block");
+            //     }
+            // })
             $("#top-span").click(function () {
                 $('html, body').animate({scrollTop: '0px'}, 500);
-            })
+            })            
+            console.log(this.detailList)
 		},
-        method: {
+        head() {
+            return this.$seo(this.dataList.header.title, this.dataList.header.descriptions, this.dataList.header.keywords)
         },
+        methods: {
+            more(i) {
+                $(".news-box .show-btn").toggleClass("up");
+                this.$axios.get("/api/news/" + i)
+                .then((response) => {
+                    if ($(".news-box .show-btn p span").text() == '收起' ) {
+                        $(".news-box .show-btn p span").text('展开剩余80%');
+                        this.detailContent = response.data.detail.new_descriptions;
+                    } else {
+                        $(".news-box .show-btn p span").text('收起');
+                        this.detailContent = response.data.detail.new_content;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        }
 	};
 
 </script>
@@ -153,11 +193,12 @@
         
     }
     .news-box {
-        padding: 10px 0;
+        padding: 50px 0 160px;
         border-bottom: 2px solid #e0e0e0;
         position: relative;
         .news-content {
-            p {
+            font-size: 14px;
+            p,span {
                 font-size: 26px;
                 color: #666;
                 line-height: 36px;
@@ -202,7 +243,7 @@
         .show-btn.up {
             background: none;
             p {
-                bottom: 20px;
+                // bottom: 20px;
                 i {
                     background-position-y: -617px;
                 }
@@ -314,6 +355,26 @@
         position: fixed;
         bottom: 304px;
         right: 20px;
+    }
+}
+</style>
+
+<style lang="scss">
+.news-box {
+    .news-content {
+        font-size: 26px;
+        color: #666;
+        line-height: 36px;
+        p,span {
+            font-size: 26px;
+            color: #666;
+            line-height: 36px;
+            // margin-bottom: 43px;
+            img {
+                display: block;
+                margin: 43px auto;
+            }
+        }
     }
 }
 </style>

@@ -92,6 +92,12 @@
 
 <script>
 export default {
+    async asyncData({ app }) {
+        let  data  = await app.$axios.$get('/api/service');
+        return { 
+            dataList: data
+        }
+    },
     data() {
         return {
             swiperOption1: {
@@ -109,8 +115,12 @@ export default {
                 nextButton: '.swiper-button-next',
                 prevButton: '.swiper-button-prev',
             },
+            dataList: []
         }
-    }
+    },
+    head() {
+        return this.$seo(this.dataList.header.title, this.dataList.header.descriptions, this.dataList.header.keywords)
+    },
 }
 </script>
 

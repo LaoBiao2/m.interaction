@@ -110,6 +110,12 @@
 
 <script>
 export default {
+    async asyncData({ app }) {
+        let  data  = await app.$axios.$get('/api/about');
+        return { 
+            dataList: data
+        }
+    },
     data() {
         return {
             swiperOption: {
@@ -190,6 +196,9 @@ export default {
                 }
             ],
         }
+    },
+    head() {
+        return this.$seo(this.dataList.header.title, this.dataList.header.descriptions, this.dataList.header.keywords)
     },
     mounted() {
         $(".b1 .show-btn span").click(function () {

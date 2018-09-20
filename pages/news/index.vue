@@ -4,13 +4,13 @@
         <div class="container News">
             <ul class="content news-ul" @scroll="gd_add">
                 <li v-for="(newsLi, key) in newsList" :key="key" :class="'li-' + (key+1)">
-                    <nuxt-link to="/news/1" class="clearfix">
+                    <nuxt-link :to="'/news/' + newsLi.id" class="clearfix">
                         <div class="img-box fl">
-                            <img :src="newsLi.newsImg" alt="">
+                            <img :src="dataList.config.con_prefix + newsLi.new_img" alt="">
                         </div>
                         <div class="txt fr">
-                            <b>{{newsLi.newsTitle}}</b>
-                            <span><i></i>{{newsLi.newsDate}}</span>
+                            <b>{{newsLi.new_title}}</b>
+                            <span><i></i>{{newsLi.new_time}}</span>
                         </div>
                     </nuxt-link>
                 </li>
@@ -24,42 +24,52 @@
 <script>
 import NewsHeader from '~/components/NewsHeader.vue';
 export default {
+    async asyncData({ app }) {
+        let  data  = await app.$axios.$get('/api/news');
+        return { 
+            dataList: data,
+            newsList: data.list,
+        }
+    },
     data() {
         return {
             newsList: [
-                {
-                    newsImg: '/images/news/news_img1.jpg',
-                    newsId: '1',
-                    newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                    newsDate: '2018/06/20'
-                },{
-                    newsImg: '/images/news/news_img2.jpg',
-                    newsId: '2',
-                    newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                    newsDate: '2018/06/20'
-                },{
-                    newsImg: '/images/news/news_img3.jpg',
-                    newsId: '3',
-                    newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                    newsDate: '2018/06/20'
-                },{
-                    newsImg: '/images/news/news_img4.jpg',
-                    newsId: '4',
-                    newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                    newsDate: '2018/06/20'
-                },{
-                    newsImg: '/images/news/news_img5.jpg',
-                    newsId: '5',
-                    newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                    newsDate: '2018/06/20'
-                },{
-                    newsImg: '/images/news/news_img6.jpg',
-                    newsId: '6',
-                    newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
-                    newsDate: '2018/06/20'
-                }
+                // {
+                //     newsImg: '/images/news/news_img1.jpg',
+                //     newsId: '1',
+                //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                //     newsDate: '2018/06/20'
+                // },{
+                //     newsImg: '/images/news/news_img2.jpg',
+                //     newsId: '2',
+                //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                //     newsDate: '2018/06/20'
+                // },{
+                //     newsImg: '/images/news/news_img3.jpg',
+                //     newsId: '3',
+                //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                //     newsDate: '2018/06/20'
+                // },{
+                //     newsImg: '/images/news/news_img4.jpg',
+                //     newsId: '4',
+                //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                //     newsDate: '2018/06/20'
+                // },{
+                //     newsImg: '/images/news/news_img5.jpg',
+                //     newsId: '5',
+                //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                //     newsDate: '2018/06/20'
+                // },{
+                //     newsImg: '/images/news/news_img6.jpg',
+                //     newsId: '6',
+                //     newsTitle: '10年客服老司机教你这样处理棘手的客户投诉',
+                //     newsDate: '2018/06/20'
+                // }
             ],
         }
+    },
+    head() {
+        return this.$seo(this.dataList.header.title, this.dataList.header.descriptions, this.dataList.header.keywords)
     },
     components: {
         NewsHeader
@@ -68,6 +78,7 @@ export default {
         $("#top-span").click(function () {
             $('html, body').animate({scrollTop: '0px'}, 500);
         });
+        console.log(this.dataList)
         window.addEventListener('scroll',this.handleScroll)
         // $.post('',{page:this.page},function(json){
         //     for(let i=0;i<json.length;i++){

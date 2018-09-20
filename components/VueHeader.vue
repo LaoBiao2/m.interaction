@@ -11,7 +11,10 @@
             </div>
             <div class="sub-menu">
                 <ul>
-                    <li>
+                    <li v-for="(navLi, index) in navList" :key="index">
+                        <nuxt-link :to="navLi.nav_url">{{navLi.nav_title}}</nuxt-link>
+                    </li>
+                    <!-- <li>
                         <nuxt-link to="/">首页</nuxt-link>
                     </li>
                     <li>
@@ -25,7 +28,7 @@
                     </li>
                     <li>
                         <nuxt-link to="/about">关于我们</nuxt-link>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div class="sub-menu-bg"></div>
@@ -37,9 +40,18 @@
 	export default {
         data(){
             return {
+                navList: []
             }
         },
 		mounted() {
+            this.$axios.get("/api")
+            .then((response) => {
+                // console.log(response);
+                this.navList = response.data.nav;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
             $(".menu-btn i").click(function () {
                 $(".VueHeader").toggleClass("up");
             });
