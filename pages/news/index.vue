@@ -2,7 +2,7 @@
     <section>
         <news-header></news-header>
         <div class="container News">
-            <ul class="content news-ul" @scroll="gd_add">
+            <ul class="content news-ul">
                 <li v-for="(newsLi, key) in newsList" :key="key" :class="'li-' + (key+1)">
                     <nuxt-link :to="'/news/' + newsLi.id" class="clearfix">
                         <div class="img-box fl">
@@ -152,8 +152,8 @@ export default {
                     color: #666;
                     display: block;
                     i {
-                        width: 20px;
-                        height: 20px;
+                        width: 22px;
+                        height: 22px;
                         display: inline-block;
                         background: url(/images/news/news_icon.png) 0 0 no-repeat;
                         background-size: 264px 90px;
